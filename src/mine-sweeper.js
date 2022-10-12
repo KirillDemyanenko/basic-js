@@ -23,9 +23,48 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+    let resultArray = []
+    for (let i = 0; i < matrix.length; i++) {
+        resultArray.push([])
+        for (let j = 0; j < matrix[i].length; j++) {
+            // 1st row
+            if (i === 0) {
+                if (j === 0) {
+                    resultArray[i].push(+matrix[i + 1][j + 1] + +matrix[i + 1][j] + +matrix[i][j + 1])
+                } else if (j === matrix[i].length - 1) {
+                    resultArray[i].push(+matrix[i + 1][j - 1] + +matrix[i + 1][j] + +matrix[i][j - 1])
+                } else {
+                    resultArray[i].push(+matrix[i + 1][j + 1] + +matrix[i + 1][j] + +matrix[i][j - 1] + +matrix[i][j + 1]
+                        + +matrix[i + 1][j - 1])
+                }
+            }
+            // last row
+            else if (i === matrix.length - 1) {
+                if (j === 0) {
+                    resultArray[i].push(+matrix[i - 1][j + 1] + +matrix[i - 1][j] + +matrix[i][j + 1])
+                } else if (j === matrix[i].length - 1) {
+                    resultArray[i].push(+matrix[i - 1][j - 1] + +matrix[i - 1][j] + +matrix[i][j - 1])
+                } else {
+                    resultArray[i].push(+matrix[i - 1][j + 1] + +matrix[i - 1][j] + +matrix[i][j - 1] + +matrix[i][j + 1]
+                        + +matrix[i - 1][j - 1])
+                }
+            } // other row 1st column
+            else if (j === 0) {
+                resultArray[i].push(+matrix[i - 1][j] + +matrix[i + 1][j] + +matrix[i + 1][j + 1] + +matrix[i - 1][j + 1]
+                        + +matrix[i][j + 1])
+            } // other row last column
+            else if (j === matrix[i].length - 1) {
+                resultArray[i].push(+matrix[i - 1][j] + +matrix[i + 1][j] + +matrix[i + 1][j - 1] + +matrix[i - 1][j - 1]
+                        + +matrix[i][j - 1])
+            } // other
+            else {
+                resultArray[i].push(+matrix[i + 1][j] + +matrix[i - 1][j] + +matrix[i][j + 1] + +matrix[i][j - 1] +
+                    +matrix[i + 1][j + 1] + +matrix[i + 1][j - 1] + +matrix[i - 1][j - 1] + +matrix[i - 1][j + 1])
+            }
+        }
+    }
+    return resultArray
 }
 
 module.exports = {
